@@ -3,31 +3,67 @@ import { combine, createDomain } from "effector";
 import { $financeItems } from "../financeItemsModel/financeItemsModel";
 
 // Const 
-export const currencyNames = ["eur", "idr"];
+export const currencyNames = ["EUR", "IDR", "RUB", "USD"];
 
 // Domain
 const currencyExchangeDomain = createDomain();
 
 // Events
-export const getEuro = currencyExchangeDomain.createEvent<string>();
-export const setCurrencyFrom = currencyExchangeDomain.createEvent<string[]>();
-export const removeCurrencyFrom = currencyExchangeDomain.createEvent<string>();
-export const setCurrencyTo = currencyExchangeDomain.createEvent<string[]>();
-export const removeCurrencyTo = currencyExchangeDomain.createEvent<string>();
+export const setFrom = currencyExchangeDomain.createEvent<string>();
+export const setFromValue = currencyExchangeDomain.createEvent<number>();
+export const setTo = currencyExchangeDomain.createEvent<string>();
+export const setCurrentCurrency = currencyExchangeDomain.createEvent<string>();
 export const getExchange = currencyExchangeDomain.createEvent<string[]>();
 
 // Store
 export const $availibleCurrency =
   currencyExchangeDomain.createStore(currencyNames);
 
-export const $euro = currencyExchangeDomain
-  .createStore<string>("")
-  .on(getEuro, (_, e: any) => e.target.value);
+export const $from = currencyExchangeDomain
+  .createStore<string>("RUB")
+  .on(setFrom, (_, e: any) => e.target.value);
 
-const $idrExchangeRate = currencyExchangeDomain.createStore(17138);
+export const $to = currencyExchangeDomain
+  .createStore<string>("IDR")
+  .on(setTo, (_, e: any) => e.target.value);
 
-export const $idr = combine($euro, $idrExchangeRate, (EUR, IDR) =>
-  EUR ? ((Number(EUR) * IDR) / 1000000).toFixed(2) : 0
+interface ExchangeRateTable {
+  [key: string]: any
+}
+
+const $exchangeRateTable = currencyExchangeDomain.createStore<ExchangeRateTable>({
+  "EUR": {
+    "EUR": 1,
+    "RUB": 94.37,
+    "IDR": 19494.28,
+    "USD": 1.17
+  },
+  "RUB": {
+    "RUB": 1,
+    "EUR": 0.011,
+    "IDR": 207.36,
+    "USD": 0.012
+  },
+  "IDR": {
+    "IDR": 1,
+    "EUR": 0.000050,
+    "RUB": 0.0048,
+    "USD": 0.000060
+  },
+  "USD": {
+    "USD": 1,
+    "RUB": 80.25,
+    "IDR": 16692.30,
+    "EUR": 0.85
+  },
+});
+
+export const $fromValue = currencyExchangeDomain
+  .createStore<number>(0)
+  .on(setFromValue, (_, e: any) => e.target.value);
+
+export const $exchangeValueRes = combine($fromValue, $from, $to, $exchangeRateTable, (fromValue, from, to, exchangeRateTable) =>
+  Math.round((exchangeRateTable[from][to] * fromValue) * 100) / 100
 );
 
 export const $allExpenses = combine($financeItems, (financeItems) => {
@@ -39,20 +75,7 @@ export const $allExpenses = combine($financeItems, (financeItems) => {
 });
 
 export const $balance = combine(
-  $idr,
+  $exchangeValueRes,
   $allExpenses,
-  (idr, expanses) => Number(idr) - expanses
+  (exchangeValue, expanses) => Number(exchangeValue) - expanses
 );
-
-export const $currencyFrom = currencyExchangeDomain
-  .createStore<string[]>([])
-  .on(setCurrencyFrom, (store, currencies) => [...store, ...currencies])
-  .on(removeCurrencyFrom, (store, currency) =>
-    store.filter((el) => el !== currency)
-  );
-export const $currencyTo = currencyExchangeDomain
-  .createStore<string[]>([])
-  .on(setCurrencyTo, (store, currencies) => [...store, ...currencies])
-  .on(removeCurrencyTo, (store, currency) =>
-    store.filter((el) => el !== currency)
-  );

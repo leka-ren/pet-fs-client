@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/financeSolver/static/css/main.f726f994.css",
-    "main.js": "/financeSolver/static/js/main.4d815870.js",
+    "main.css": "/financeSolver/static/css/main.44305ab2.css",
+    "main.js": "/financeSolver/static/js/main.7a1d8c0e.js",
     "static/media/DotGothic16-Regular.ttf": "/financeSolver/static/media/DotGothic16-Regular.7317ef6fed091a7e2f39.ttf",
-    "static/media/Trash.svg": "/financeSolver/static/media/Trash.e31b8a3e11a3a910e1717d1133eedced.svg",
+    "static/media/Trash.svg": "/financeSolver/static/media/Trash.dfa75e3f973b5bb6439a8d59caa88306.svg",
     "index.html": "/financeSolver/index.html",
-    "main.f726f994.css.map": "/financeSolver/static/css/main.f726f994.css.map",
-    "main.4d815870.js.map": "/financeSolver/static/js/main.4d815870.js.map"
+    "main.44305ab2.css.map": "/financeSolver/static/css/main.44305ab2.css.map",
+    "main.7a1d8c0e.js.map": "/financeSolver/static/js/main.7a1d8c0e.js.map"
   },
   "entrypoints": [
-    "static/css/main.f726f994.css",
-    "static/js/main.4d815870.js"
+    "static/css/main.44305ab2.css",
+    "static/js/main.7a1d8c0e.js"
   ]
 }

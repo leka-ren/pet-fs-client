@@ -15,3 +15,103 @@
   margin: 0;
   font-size: 15px;
 }
+
+.currencySelectForm {
+  background-color: transparent;
+}
+
+select {
+  appearance: none;
+
+  @supports (appearance: base-select) {
+
+    &,
+    &::picker(select) {
+      appearance: base-select;
+    }
+  }
+}
+
+select {
+  display: flex;
+  justify-content: space-between;
+  min-width: 100px;
+  align-items: center;
+  color: #ffe5e5;
+  padding-block: 10px;
+  padding-inline: 10px 5px;
+  border-radius: 0;
+  border: none;
+  cursor: pointer;
+  font-family: "DotGothic16", Arial, Helvetica, sans-serif;
+
+  @supports (appearance: base-select) {
+    padding-inline: 10px;
+    background-image: none;
+
+    &::picker-icon {
+      content: "";
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='%23FFF' class='size-6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='m19.5 8.25-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E%0A");
+      transition: rotate 0.2s ease-out;
+    }
+
+    &:open::picker-icon {
+      rotate: 180deg;
+    }
+
+    &::picker(select) {
+      padding: 0;
+      margin-top: 5px;
+      border: 2px solid #ffe5e5;
+      font-weight: 400;
+
+      opacity: 0;
+      height: 0;
+      overflow: clip;
+      transition: height 0.5s ease-out, opacity 0.5s ease-out, overlay 0.5s,
+        display 0.5s;
+
+      transition-behavior: allow-discrete;
+    }
+
+    &:open::picker(select) {
+      opacity: 1;
+      height: calc-size(auto, size);
+      overflow: auto;
+
+      @starting-style {
+        opacity: 0;
+        height: 0;
+      }
+    }
+
+    option {
+      padding: 10px;
+      border-top: 1px solid #ffe5e5;
+      cursor: pointer;
+      transition-duration: 0.2s;
+      transition-timing-function: ease-out;
+      background: #205050;
+
+      &:where(:hover, :focus, :active) {
+        background: #122d2dba;
+        color: #ffe5e5;
+      }
+
+      &:checked {
+        background: #122d2d;
+        color: #ffe5e5;
+      }
+
+      &::checkmark {
+        display: none;
+      }
+
+      &:first-child {
+        border: 0;
+      }
+    }
+  }
+}

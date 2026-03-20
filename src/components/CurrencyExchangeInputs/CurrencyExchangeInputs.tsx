@@ -1,5 +1,5 @@
 import { useStore } from "effector-react";
-import { ComponentType } from "react";
+import { ComponentType, useState } from "react";
 import {
   $exchangeValueRes,
   $from,
@@ -9,11 +9,11 @@ import {
   setFromValue,
   setTo,
 } from "../../model/currenceExchangeModel/currenceExchangeModel";
-import { CurrencySelector } from "../CurrencySelector/CurrencySelector";
 import Input from "../ui/Input/Input";
 
 import styles from "./CurrencyExchangeInputs.module.scss";
 import { BlockTitle } from "../ui/BlockTitle/BlockTitle";
+import { NewCurrencySelector } from "../NewCurrencySelector/NewCurrencySelector";
 
 export const CurrencyExchangeInputs: ComponentType = () => {
   const from = useStore($from);
@@ -26,7 +26,7 @@ export const CurrencyExchangeInputs: ComponentType = () => {
       <BlockTitle title="Обмен валюты:" />
       <div className={styles.inputsContent}>
         <div className={styles.inputContent}>
-          <CurrencySelector
+          <NewCurrencySelector
             onChange={setFrom}
             classNames={styles.currencySelector}
             currency={from}
@@ -40,7 +40,7 @@ export const CurrencyExchangeInputs: ComponentType = () => {
           />
         </div>
         <div className={styles.inputContent}>
-          <CurrencySelector
+          <NewCurrencySelector
             classNames={styles.currencySelector}
             currency={to}
             onChange={setTo}

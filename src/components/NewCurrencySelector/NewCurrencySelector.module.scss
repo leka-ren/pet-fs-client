@@ -1,0 +1,43 @@
+.content {
+    display: block;
+    background-color: transparent;
+    width: fit-content;
+    height: fit-content;
+    padding: 0;
+    margin: 0;
+    align-self: center;
+}
+
+.currencyName {
+    align-self: center;
+    font-family: "DotGothic16", Arial, Helvetica, sans-serif;
+    font-weight: 100;
+    color: #ffe5e5;
+    padding: 0 15px;
+    margin: 0;
+    font-size: 15px;
+}
+
+.currencySelectForm {
+    background-color: transparent;
+}
+
+.currenciesDropdownMenu {
+    background-color: #2A2A29;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: max-content;
+    position: absolute;
+    overflow: hidden;
+    list-style-type: none;
+}
+
+.currencyInList:hover {
+    background-color: #444442;
+}
+
+.selected {
+    background-color: #444442;
+}

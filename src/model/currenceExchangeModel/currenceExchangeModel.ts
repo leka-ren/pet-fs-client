@@ -20,12 +20,12 @@ export const $availibleCurrency =
   currencyExchangeDomain.createStore(currencyNames);
 
 export const $from = currencyExchangeDomain
-  .createStore<string>("RUB")
-  .on(setFrom, (_, e: any) => e.target.value);
+  .createStore<string>("BYN")
+  .on(setFrom, (_, currencyName: string) => currencyName);
 
 export const $to = currencyExchangeDomain
   .createStore<string>("IDR")
-  .on(setTo, (_, e: any) => e.target.value);
+  .on(setTo, (_, currencyName: string) => currencyName);
 
 interface ExchangeRateTable {
   [key: string]: any
